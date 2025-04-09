@@ -1,28 +1,27 @@
-# 🎙️ Speech to Indian Language Translator
+# 🤖 Voice2Sign: Speech-to-Indian Sign Language Translator
 
-This project is a voice-based translation system that converts spoken English into translated Indian languages like Hindi, Bengali, Tamil, etc. It uses speech recognition, language translation, and text-to-speech to provide both text and audio output in the target language.
-
----
-
-## ✅ Features
-
-- 🎤 Converts English speech to text
-- 🌐 Translates to major Indian languages
-- 🔊 Speaks the translated text aloud
-- 📔 Easy to run with a single Jupyter notebook
+This project captures spoken English using a microphone, processes it using audio signal processing and speech recognition, and maps the result to **Indian Sign Language (ISL)** using pre-saved GIFs or alphabet images. It is a great assistive tool for translating voice into visual ISL representations.
 
 ---
 
-## 🧠 Architecture Overview
+## 🎯 Features
 
-Here’s a high-level view of how the system works:
+- 🎙️ Real-time voice recording (using microphone)
+- 🎧 Audio feature extraction with mel-spectrograms and MFCC
+- 🧠 Converts speech to text using Google Speech Recognition
+- 🧩 Matches recognized phrases with pre-existing ISL GIFs
+- 🔤 Falls back to showing alphabet images if full phrase isn't available
+- 🖼️ GUI with `easygui` and `tkinter` for a simple interactive experience
+
+---
+
+## 🧱 Architecture
 
 ```
-+------------------+       +----------------------+       +------------------+       +----------------+
-|  🎤 User Speaks  | --->  | 🧠 Speech Recognizer | --->  | 🌐 Translator     | --->  | 🔊 Text-to-Speech |
-+------------------+       +----------------------+       +------------------+       +----------------+
-        Input                  Converts speech                Translates text             Speaks in
-     (English audio)             to English text               to Indian lang           Indian language
++------------------+      +---------------------+      +-----------------+      +-----------------+
+| 🎙️ Microphone    | -->  | 🎧 Audio Processing | -->  | 🧠 Speech-to-Text| -->  | ✋ ISL Mapping   |
++------------------+      +---------------------+      +-----------------+      +-----------------+
+      User Input             Mel Spectrogram / MFCC        Google API             Show GIF or letters
 ```
 
 ---
@@ -30,12 +29,15 @@ Here’s a high-level view of how the system works:
 ## 📁 Folder Structure
 
 ```
-Speech-to-Indian/
-│
-├── Speech to Indian.ipynb       # Main Jupyter Notebook
-├── README.md                    # This file
-├── requirements.txt             # Required Python packages
-└── assets/                      # (Optional) Screenshots, audio samples
+Voice2Sign/
+├── Speech to Indian.ipynb       # Main notebook
+├── ISL_Gifs/                    # Folder containing GIFs for predefined ISL phrases
+├── letters/                     # Folder containing images for A-Z letters
+├── signlang.png                 # Image for easygui popup
+├── recording8.wav               # Captured audio file
+├── sound9.wav                   # Reconstructed audio after processing
+├── README.md                    # Project documentation
+└── requirements.txt             # Required packages
 ```
 
 ---
@@ -43,81 +45,75 @@ Speech-to-Indian/
 ## ⚙️ Installation
 
 1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/your-username/speech-to-indian.git
-   cd speech-to-indian
-   ```
+```bash
+git clone https://github.com/your-username/voice2sign.git
+cd voice2sign
+```
 
-2. **(Optional) Create a Virtual Environment**
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
+2. **Install Required Packages**
+```bash
+pip install -r requirements.txt
+```
 
-3. **Install Dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+---
+
+## 📦 Requirements
+
+```
+numpy
+matplotlib
+opencv-python
+Pillow
+easygui
+tk
+librosa
+soundfile
+sounddevice
+scipy
+wavio
+speechrecognition
+pyttsx3
+pydub
+playsound==1.2.2
+```
 
 ---
 
 ## 🚀 How to Run
 
-1. Start Jupyter:
-   ```bash
-   jupyter notebook
-   ```
-
-2. Open `Speech to Indian.ipynb` and run each cell step-by-step.
-
-3. Follow prompts to speak, translate, and hear the output.
-
----
-
-## 📦 Dependencies
-
-Put this in `requirements.txt`:
-
-```
-speechrecognition
-googletrans==4.0.0rc1
-gTTS
-playsound==1.2.2
-pyaudio
+1. Launch Jupyter Notebook:
+```bash
+jupyter notebook
 ```
 
-> ⚠️ Note: `pyaudio` might require special installation for your OS.
+2. Open `Speech to Indian.ipynb`.
+
+3. Speak when prompted → text is generated → mapped to ISL GIFs or letters.
 
 ---
 
-## 🌍 Supported Indian Languages
+## 📷 Example Output
 
-- Hindi
-- Bengali
-- Tamil
-- Telugu
-- Kannada
-- Gujarati
-- Marathi
+- If you say: `"good morning"` → it will show `ISL_Gifs/good morning.gif`
+- If phrase not found: `"goa"` → it will show letters: `g`, `o`, `a` using images in `/letters/`
 
 ---
 
-## 💻 Example Usage
+## 📌 Notes
 
-1. You say: “Hello, how are you?”
-2. Select target language: Hindi
-3. Output: “नमस्ते, आप कैसे हैं?” (text + audio)
+- Make sure the folders `ISL_Gifs/` and `letters/` exist and contain correct GIF/JPG files.
+- Run the notebook in a GUI-capable environment (not headless server) since it uses `tkinter`.
 
 ---
 
-## 📝 License
+## 📜 License
 
-MIT License. See [LICENSE](LICENSE) for more info.
+MIT License — free to use and distribute.
 
 ---
 
 ## 🙌 Acknowledgments
 
-- Google Speech Recognition
-- Google Translate API
-- gTTS (Google Text-to-Speech)
+- Google Speech Recognition API
+- Librosa for audio analysis
+- Indian Sign Language GIF dataset (manually curated)
